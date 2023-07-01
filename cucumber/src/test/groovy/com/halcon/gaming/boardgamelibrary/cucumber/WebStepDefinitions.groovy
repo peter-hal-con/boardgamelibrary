@@ -45,7 +45,7 @@ class WebStepDefinitions {
 
     @After
     void stopWebDriver() {
-        webDriver.close()
+        webDriver.quit()
     }
 
     @When("we direct the browser to {string}")

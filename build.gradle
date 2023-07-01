@@ -20,3 +20,6 @@ task(project:"server", name:"assemble").mustRunAfter(copyClientResources)
 tasks.register('clean', Delete) {
     delete rootProject.buildDir
 }
+
+task stage(dependsOn: ['assembleServerAndClient'])
+

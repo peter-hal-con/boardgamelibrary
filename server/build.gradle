@@ -96,5 +96,5 @@ tasks.withType(Test) {
 
 bootJar {
     duplicatesStrategy = DuplicatesStrategy.INCLUDE
-    dependsOn rootProject.copyClientResources
+    //dependsOn rootProject.copyClientResources
 }

@@ -1,8 +1,14 @@
-package com.halcon
+package com.halcon.gaming.boardgamelibrary
+
+import grails.util.Environment
 
 class UrlMappings {
 
     static mappings = {
+        if (Environment.current != Environment.TEST) {
+            '/testOnly'(view: '/notFound')
+        }
+
         delete "/$controller/$id(.$format)?"(action:"delete")
         get "/$controller(.$format)?"(action:"index")
         get "/$controller/$id(.$format)?"(action:"show")

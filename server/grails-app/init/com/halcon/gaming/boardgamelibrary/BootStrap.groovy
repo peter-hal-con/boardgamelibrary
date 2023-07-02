@@ -1,4 +1,4 @@
-package com.halcon
+package com.halcon.gaming.boardgamelibrary
 
 class BootStrap {
 

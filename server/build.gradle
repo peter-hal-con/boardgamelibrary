@@ -70,6 +70,11 @@ dependencies {
     testImplementation "org.grails:grails-web-testing-support"
     testImplementation "org.grails:views-json-testing-support"
     testImplementation "org.hibernate.validator:hibernate-validator:6.1.7.Final"
+
+    // https://mvnrepository.com/artifact/org.grails.plugins/spring-security-core
+    implementation 'org.grails.plugins:spring-security-core:5.2.1'
+    // https://mvnrepository.com/artifact/org.grails.plugins/spring-security-rest
+    implementation 'org.grails.plugins:spring-security-rest:3.0.1'
 }
 
 bootRun {

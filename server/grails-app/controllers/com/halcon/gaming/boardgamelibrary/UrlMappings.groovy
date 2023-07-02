@@ -5,8 +5,10 @@ import grails.util.Environment
 class UrlMappings {
 
     static mappings = {
-        if (Environment.current != Environment.TEST) {
-            '/testOnly'(view: '/notFound')
+        if (Environment.current == Environment.TEST) {
+            "/testOnly/$action?/$id?(.$format)?"(controller: "testOnly")
+        } else {
+            "/testOnly/$action?/$id?(.$format)?"(view: '/notFound')
         }
 
         delete "/$controller/$id(.$format)?"(action: "delete")

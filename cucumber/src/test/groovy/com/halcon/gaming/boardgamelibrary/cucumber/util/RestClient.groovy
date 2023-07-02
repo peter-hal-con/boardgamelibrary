@@ -1,11 +1,7 @@
 package com.halcon.gaming.boardgamelibrary.cucumber.util
 
-import com.jayway.jsonpath.JsonPath
-import com.jayway.jsonpath.PathNotFoundException
-import groovy.json.JsonOutput
-import groovy.json.JsonSlurper
 
-import static org.junit.jupiter.api.Assertions.fail
+import groovy.json.JsonOutput
 
 class RestClient {
     private String accessToken
@@ -32,23 +28,6 @@ class RestClient {
         request.setRequestProperty("Content-Type", "application/json")
         request.getOutputStream().write(JsonOutput.toJson(body).getBytes("UTF-8"))
         return request
-    }
-
-    private static String performAuthentication(String username, String password) {
-        def request = performPostRequest("/api/login", [username: username, password: password])
-        return request.responseCode == 200 ? new JsonSlurper().parseText(request.getInputStream().getText()).access_token : null
-    }
-
-    private static def jsonPathParse(String document, String jsonPath) {
-        try {
-            return JsonPath.parse(document).read(jsonPath)
-        } catch (PathNotFoundException e) {
-            println("--- PathNotFoundException ---")
-            println("document: ${document}")
-            println("jsonPath: ${jsonPath}")
-            println("-----------------------------")
-            fail()
-        }
     }
 
     void GET(String path) {

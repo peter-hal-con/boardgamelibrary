@@ -40,13 +40,13 @@ Feature: BoardGameGeek Autocomplete
       | Senet e Tablan          | Senet e Tablan                 | 328628 | Senet e Tablan          |                |
 
 
-  Scenario Outline: Entering an unrecognized title into a boardgamegeek autocomplete component
+  Scenario: Entering an unrecognized title into a boardgamegeek autocomplete component
     When we direct the browser to "/#/test/bgg-autocomplete"
     And we enter the value "There is no game with this title" into the autocomplete component with id "bgg-autocomplete"
     Then we will see "There is no game with this title" in the dropdown list of the autocomplete component with id "bgg-autocomplete"
 
 
-  Scenario Outline: Selecting an unrecognized title in a boardgamegeek autocomplete component combobox
+  Scenario: Selecting an unrecognized title in a boardgamegeek autocomplete component combobox
     When we direct the browser to "/#/test/bgg-autocomplete"
     And we enter the value "There is no game with this title" into the autocomplete component with id "bgg-autocomplete"
     And we click on the "There is no game with this title" option in the autocomplete component with id "bgg-autocomplete"

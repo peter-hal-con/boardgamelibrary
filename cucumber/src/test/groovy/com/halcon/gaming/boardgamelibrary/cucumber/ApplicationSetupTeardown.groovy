@@ -4,7 +4,7 @@ import com.halcon.gaming.boardgamelibrary.cucumber.util.ProcessManager
 import io.cucumber.java.AfterAll
 import io.cucumber.java.BeforeAll
 
-public class ApplicationSetupTeardown {
+class ApplicationSetupTeardown {
     private static int responseCode(String path) {
         return new URL("http://localhost:8080${path}").openConnection().responseCode
     }

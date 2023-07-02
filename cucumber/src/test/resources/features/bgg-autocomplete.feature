@@ -20,10 +20,10 @@ Feature: BoardGameGeek Autocomplete
     And we enter the value "<user-input>" into the autocomplete component with id "bgg-autocomplete"
     Then we will see "<display-name>" in the dropdown list of the autocomplete component with id "bgg-autocomplete"
 
-  Examples:
-    | user-input              | display-name                   |
-    | Crossbows and Catapults | Crossbows and Catapults (1983) |
-    | Senet e Tablan          | Senet e Tablan                 |
+    Examples:
+      | user-input              | display-name                   |
+      | Crossbows and Catapults | Crossbows and Catapults (1983) |
+      | Senet e Tablan          | Senet e Tablan                 |
 
 
   Scenario Outline: Selecting a recognized title in a boardgamegeek autocomplete component combobox
@@ -34,10 +34,10 @@ Feature: BoardGameGeek Autocomplete
     And the component with id "selected-item-primary-name" will contain "<primary-name>"
     And the component with id "selected-item-year-published" will contain "<year-published>"
 
-  Examples:
-    | user-input              | display-name                   | bgg-id | primary-name            | year-published |
-    | Crossbows and Catapults | Crossbows and Catapults (1983) |   2129 | Crossbows and Catapults |           1983 |
-    | Senet e Tablan          | Senet e Tablan                 | 328628 | Senet e Tablan          |                |
+    Examples:
+      | user-input              | display-name                   | bgg-id | primary-name            | year-published |
+      | Crossbows and Catapults | Crossbows and Catapults (1983) | 2129   | Crossbows and Catapults | 1983           |
+      | Senet e Tablan          | Senet e Tablan                 | 328628 | Senet e Tablan          |                |
 
 
   Scenario Outline: Entering an unrecognized title into a boardgamegeek autocomplete component

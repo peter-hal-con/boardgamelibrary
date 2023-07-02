@@ -8,30 +8,30 @@
 </template>
 
 <script>
-  import BggAutocomplete from '../components/BggAutocomplete'
-  import { bggId, primaryName, yearPublished } from '@/util/bgg-util'
+import BggAutocomplete from '../components/BggAutocomplete'
+import {bggId, primaryName, yearPublished} from '@/util/bgg-util'
 
-  export default {
-    name: 'TestBggAutocomplete',
+export default {
+  name: 'TestBggAutocomplete',
 
-    components: {
-      BggAutocomplete,
-    },
+  components: {
+    BggAutocomplete,
+  },
 
-    data () {
-      return {
-        selectedItemBggId: '',
-        selectedItemPrimaryName: '',
-        selectedItemYearPublished: ''
-      }
-    },
+  data() {
+    return {
+      selectedItemBggId: '',
+      selectedItemPrimaryName: '',
+      selectedItemYearPublished: ''
+    }
+  },
 
-    methods: {
-      selectedItem(selectedItem) {
-        this.selectedItemBggId = bggId(selectedItem)
-        this.selectedItemPrimaryName = primaryName(selectedItem)
-        this.selectedItemYearPublished = yearPublished(selectedItem)
-      }
+  methods: {
+    selectedItem(selectedItem) {
+      this.selectedItemBggId = bggId(selectedItem)
+      this.selectedItemPrimaryName = primaryName(selectedItem)
+      this.selectedItemYearPublished = yearPublished(selectedItem)
     }
   }
+}
 </script>

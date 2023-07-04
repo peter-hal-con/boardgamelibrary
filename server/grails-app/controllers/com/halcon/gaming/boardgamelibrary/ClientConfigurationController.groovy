@@ -6,6 +6,6 @@ class ClientConfigurationController {
     static responseFormats = ['json', 'xml']
 
     def index() {
-        render Collections.singletonMap("BGG_BASE_URL", "https://boardgamegeek.com") as JSON
+        render Collections.singletonMap("BGG_BASE_URL", System.getenv("BGG_BASE_URL") ?: "https://boardgamegeek.com") as JSON
     }
 }

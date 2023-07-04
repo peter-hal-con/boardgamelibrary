@@ -1,6 +1,8 @@
 package com.halcon.gaming.boardgamelibrary.cucumber.util
 
 import com.sun.net.httpserver.HttpServer
+import groovy.json.JsonOutput
+import groovy.json.JsonSlurper
 
 class CachingProxyHttpServer implements AutoCloseable {
     private class CachedResponse {
@@ -16,7 +18,7 @@ class CachingProxyHttpServer implements AutoCloseable {
     }
 
     private final HttpServer server
-    private final Map<String, CachingProxyHttpServer.CachedResponse> _cachedResponses = [:]
+    private final Map<String, CachingProxyHttpServer.CachedResponse> cachedResponses = [:]
     private int cacheMissCount = 0
 
     CachingProxyHttpServer(String remoteTarget, int localPort = 8080) {
@@ -24,13 +26,13 @@ class CachingProxyHttpServer implements AutoCloseable {
         server.with {
             createContext("/") { http ->
                 String requestPath = http.getRequestURI().toString()
-                if (!_cachedResponses.containsKey(requestPath)) {
+                if (!cachedResponses.containsKey(requestPath)) {
                     URLConnection proxyRequest = new URL("${remoteTarget}${requestPath}").openConnection()
-                    _cachedResponses[requestPath] = new CachingProxyHttpServer.CachedResponse(proxyRequest.getHeaderField("Content-type"), proxyRequest.getResponseCode(), proxyRequest.getInputStream().getText())
+                    cachedResponses[requestPath] = new CachingProxyHttpServer.CachedResponse(proxyRequest.getHeaderField("Content-type"), proxyRequest.getResponseCode(), proxyRequest.getInputStream().getText())
                     cacheMissCount++
                 }
 
-                CachingProxyHttpServer.CachedResponse response = _cachedResponses[requestPath]
+                def response = cachedResponses[requestPath]
                 http.responseHeaders.add("Content-type", response.contentType)
                 http.responseHeaders.add("Access-Control-Allow-Origin", "*")
                 http.sendResponseHeaders(response.statusCode, 0)
@@ -55,12 +57,12 @@ class CachingProxyHttpServer implements AutoCloseable {
         return cacheMissCount
     }
 
-    def getCachedResponses() {
-        return _cachedResponses
+    String exportCachedResponses() {
+        return JsonOutput.toJson(cachedResponses)
     }
 
-    def loadCachedResponses(cachedResponses) {
-        _cachedResponses.putAll(cachedResponses)
+    def importCachedResponses(String cachedResponsesJson) {
+        this.cachedResponses.putAll(new JsonSlurper().parseText(cachedResponsesJson))
         return this
     }
 }

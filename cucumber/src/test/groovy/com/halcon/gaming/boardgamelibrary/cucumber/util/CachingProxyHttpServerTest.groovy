@@ -1,6 +1,5 @@
 package com.halcon.gaming.boardgamelibrary.cucumber.util
 
-
 import groovy.test.GroovyTestCase
 
 class CachingProxyHttpServerTest extends GroovyTestCase {
@@ -17,16 +16,16 @@ class CachingProxyHttpServerTest extends GroovyTestCase {
         }
     }
 
-    void testProxyHttpServerCachedResponses() {
-        def cachedResponses
+    void testProxyHttpServerExportImportCachedResponses() {
+        String cachedResponsesJson
         try (def server = new CachingProxyHttpServer("https://example.com")) {
             def request = new URL("http://localhost:${server.getAddress().port}/").openConnection()
             assertEquals(200, request.getResponseCode())
             assertTrue(request.getInputStream().getText().startsWith("<!doctype html>"))
-            cachedResponses = server.getCachedResponses()
+            cachedResponsesJson = server.exportCachedResponses()
         }
 
-        try (def server = new CachingProxyHttpServer("https://example.com").loadCachedResponses(cachedResponses)) {
+        try (def server = new CachingProxyHttpServer("https://example.com").importCachedResponses(cachedResponsesJson)) {
             3.times {
                 def request = new URL("http://localhost:${server.getAddress().port}/").openConnection()
                 assertEquals(200, request.getResponseCode())

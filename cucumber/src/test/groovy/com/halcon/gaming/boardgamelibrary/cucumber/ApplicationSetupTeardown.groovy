@@ -22,16 +22,19 @@ class ApplicationSetupTeardown {
         }
     })
 
+    private static File cachedResponsesFile = new File("src/test/resources/cachedResponses.json")
     private static CachingProxyHttpServer bggCachingProxy = new CachingProxyHttpServer("https://boardgamegeek.com", 8081)
 
     @BeforeAll
     static void startServer() {
+        bggCachingProxy.importCachedResponses(cachedResponsesFile.text)
         processManager.start()
     }
 
     @AfterAll
     static void stopServer() {
         processManager.stop()
+        cachedResponsesFile.withWriter { it << bggCachingProxy.exportCachedResponses() }
         bggCachingProxy.close()
     }
 

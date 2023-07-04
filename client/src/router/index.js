@@ -2,9 +2,6 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Welcome from '@/components/Welcome'
 
-import TestBggAutocomplete from '@/views/TestBggAutocomplete'
-import TestQrcodeReader from '@/views/TestQrcodeReader'
-
 Vue.use(Router)
 
 export default new Router({
@@ -22,12 +19,12 @@ export default new Router({
         {
             path: '/test/bgg-autocomplete',
             name: 'TestBggAutocomplete',
-            component: TestBggAutocomplete
+            component: () => import('@/views/TestBggAutocomplete')
         },
         {
             path: '/test/qrcode-reader',
             name: 'TestQrcodeReader',
-            component: TestQrcodeReader
+            component: () => import('@/views/TestQrcodeReader')
         }
     ]
 })

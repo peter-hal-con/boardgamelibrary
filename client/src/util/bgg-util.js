@@ -29,8 +29,20 @@ export function createItemWithPrimaryName(primaryName) {
     return new window.DOMParser().parseFromString("<item id='none' type='boardgame'><name type='primary' value='" + primaryName + "'/></item>", 'text/xml').documentElement
 }
 
+async function bggBaseUrl() {
+    if (process.env.BGG_BASE_URL) {
+        return process.env.BGG_BASE_URL
+    } else {
+        const origin = window.location.origin === "http://localhost:3000" ? "http://localhost:8080" : window.location.origin
+        return fetch(origin + '/clientConfiguration')
+            .then(response => response.json())
+            .then(json => json.BGG_BASE_URL)
+    }
+}
+
 export async function searchBgg(searchInput) {
-    return await fetch('https://boardgamegeek.com/xmlapi2/search?type=boardgame,boardgameaccessory,boardgameexpansion&query=' + encodeURIComponent(searchInput.replace(/\s/g, '+')) + '')
+    return await bggBaseUrl()
+        .then(bggBaseUrl => fetch(bggBaseUrl + '/xmlapi2/search?type=boardgame,boardgameaccessory,boardgameexpansion&query=' + encodeURIComponent(searchInput.replace(/\s/g, '+')) + ''))
         .then(response => response.text())
         .then(text => new window.DOMParser().parseFromString(text, 'text/xml'))
         .then(xml => (Array.prototype.slice.call(xml.documentElement.getElementsByTagName('item'))))

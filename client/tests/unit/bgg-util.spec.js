@@ -73,6 +73,7 @@ describe('createItemWithPrimaryName', () => {
 
 
 describe('searchBgg', () => {
+    process.env.BGG_BASE_URL = 'https://boardgamegeek.com'
     it('queries BoardGameGeek', async () => {
         const items = await searchBgg('Senet e Tablan')
         expect(items.length).toBe(1)

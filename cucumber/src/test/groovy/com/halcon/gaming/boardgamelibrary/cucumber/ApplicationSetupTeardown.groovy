@@ -1,5 +1,6 @@
 package com.halcon.gaming.boardgamelibrary.cucumber
 
+import com.halcon.gaming.boardgamelibrary.cucumber.util.CachingProxyHttpServer
 import com.halcon.gaming.boardgamelibrary.cucumber.util.ProcessManager
 import io.cucumber.java.AfterAll
 import io.cucumber.java.Before
@@ -12,7 +13,7 @@ class ApplicationSetupTeardown {
         return new URL("http://localhost:8080${path}").openConnection().responseCode
     }
 
-    private static ProcessManager processManager = new ProcessManager("java -Dgrails.env=test -jar build/server-0.1.jar", new File(".."), {
+    private static ProcessManager processManager = new ProcessManager("java -Dgrails.env=test -jar build/server-0.1.jar", ['BGG_BASE_URL=http://localhost:8081'], new File(".."), {
         try {
             int rc = responseCode("/")
             return rc == 200
@@ -20,6 +21,8 @@ class ApplicationSetupTeardown {
             return false
         }
     })
+
+    private static CachingProxyHttpServer bggCachingProxy = new CachingProxyHttpServer("https://boardgamegeek.com", 8081)
 
     @BeforeAll
     static void startServer() {
@@ -29,6 +32,7 @@ class ApplicationSetupTeardown {
     @AfterAll
     static void stopServer() {
         processManager.stop()
+        bggCachingProxy.close()
     }
 
     @Before

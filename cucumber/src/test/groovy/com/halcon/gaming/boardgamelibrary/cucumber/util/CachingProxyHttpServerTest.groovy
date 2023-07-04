@@ -36,4 +36,14 @@ class CachingProxyHttpServerTest extends GroovyTestCase {
             assertEquals(0, server.getCacheMissCount())
         }
     }
+
+    void testProxyHttpServerWithBoardGameGeek() {
+        try (def server = new CachingProxyHttpServer("https://boardgamegeek.com")) {
+            def request = new URL("http://localhost:${server.getAddress().port}/xmlapi2/search?type=boardgame,boardgameaccessory,boardgameexpansion&query=crossbows").openConnection()
+            assertEquals(200, request.getResponseCode())
+            def text = request.getInputStream().getText()
+            assertTrue(text.startsWith("<?xml version=\"1.0\" encoding=\"utf-8\"?>"))
+            assertTrue(text.size() > 256)
+        }
+    }
 }

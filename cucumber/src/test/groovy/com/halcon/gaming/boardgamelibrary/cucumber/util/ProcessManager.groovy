@@ -6,6 +6,7 @@ import static org.awaitility.Awaitility.await
 
 class ProcessManager {
     final String cmdline
+    final List envp
     final File directory
     final Closure isRunning
 
@@ -13,8 +14,9 @@ class ProcessManager {
     StringBuilder sout
     StringBuilder serr
 
-    ProcessManager(String cmdline, File directory, Closure isRunning) {
+    ProcessManager(String cmdline, List envp, File directory, Closure isRunning) {
         this.cmdline = cmdline
+        this.envp = envp
         this.directory = directory
         this.isRunning = isRunning
     }
@@ -22,7 +24,7 @@ class ProcessManager {
     boolean start() {
         sout = new StringBuilder()
         serr = new StringBuilder()
-        process = cmdline.execute(null, directory)
+        process = cmdline.execute(envp, directory)
         process.consumeProcessOutput(sout, serr)
 
         await().atMost(5, TimeUnit.MINUTES).until {
@@ -30,10 +32,10 @@ class ProcessManager {
                 println('--- COMMAND FAILED ---')
                 println(cmdline)
                 if (process.isAlive()) {
-                    println("Process was RUNNING");
+                    println("Process was RUNNING")
                     process.waitForOrKill(10000)
                 } else {
-                    println("Process was TERMINATED");
+                    println("Process was TERMINATED")
                 }
                 println()
                 println('Standard Output:')

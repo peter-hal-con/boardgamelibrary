@@ -23,7 +23,7 @@ class CachingProxyHttpServer implements AutoCloseable {
         server = HttpServer.create(new InetSocketAddress(localPort), 0)
         server.with {
             createContext("/") { http ->
-                String requestPath = http.getRequestURI().getPath()
+                String requestPath = http.getRequestURI().toString()
                 if (!_cachedResponses.containsKey(requestPath)) {
                     URLConnection proxyRequest = new URL("${remoteTarget}${requestPath}").openConnection()
                     _cachedResponses[requestPath] = new CachingProxyHttpServer.CachedResponse(proxyRequest.getHeaderField("Content-type"), proxyRequest.getResponseCode(), proxyRequest.getInputStream().getText())
@@ -32,6 +32,7 @@ class CachingProxyHttpServer implements AutoCloseable {
 
                 CachingProxyHttpServer.CachedResponse response = _cachedResponses[requestPath]
                 http.responseHeaders.add("Content-type", response.contentType)
+                http.responseHeaders.add("Access-Control-Allow-Origin", "*")
                 http.sendResponseHeaders(response.statusCode, 0)
                 http.responseBody.withWriter { out ->
                     out << response.body

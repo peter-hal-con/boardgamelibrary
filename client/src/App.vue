@@ -35,6 +35,7 @@
         <span class="mr-2">Latest Release</span>
         <v-icon>mdi-open-in-new</v-icon>
       </v-btn>
+      <UserDropdownLoginButtonToggle/>
     </v-app-bar>
 
     <v-main>
@@ -45,8 +46,11 @@
 
 <script>
 
+import UserDropdownLoginButtonToggle from "@/components/UserDropdownLoginButtonToggle.vue";
+
 export default {
   name: 'App',
+  components: {UserDropdownLoginButtonToggle},
 
   data: () => ({
     //

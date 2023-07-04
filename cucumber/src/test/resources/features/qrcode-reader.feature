@@ -11,8 +11,8 @@ Feature: QRCode Reader
   Scenario Outline:
     When we direct the browser to "/#/test/qrcode-reader"
     And we scan the qrcode "<qrcode>" into the qrcode reader component with id "qrcode-reader"
-    Then the component with id "decode-type" will contain "<decode-type>"
-    And the component with id "decode-uuid" will contain "<decode-uuid>"
+    Then the text-field with id "decode-type" will contain "<decode-type>"
+    And the text-field with id "decode-uuid" will contain "<decode-uuid>"
 
     Examples:
       | qrcode                                     | decode-type | decode-uuid                          |

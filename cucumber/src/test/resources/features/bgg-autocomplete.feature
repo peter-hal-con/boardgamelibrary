@@ -30,9 +30,9 @@ Feature: BoardGameGeek Autocomplete
     When we direct the browser to "/#/test/bgg-autocomplete"
     And we enter the value "<user-input>" into the autocomplete component with id "bgg-autocomplete"
     And we click on the "<display-name>" option in the autocomplete component with id "bgg-autocomplete"
-    Then the component with id "selected-item-bgg-id" will contain "<bgg-id>"
-    And the component with id "selected-item-primary-name" will contain "<primary-name>"
-    And the component with id "selected-item-year-published" will contain "<year-published>"
+    Then the text-field with id "selected-item-bgg-id" will contain "<bgg-id>"
+    And the text-field with id "selected-item-primary-name" will contain "<primary-name>"
+    And the text-field with id "selected-item-year-published" will contain "<year-published>"
 
     Examples:
       | user-input              | display-name                   | bgg-id | primary-name            | year-published |
@@ -50,6 +50,6 @@ Feature: BoardGameGeek Autocomplete
     When we direct the browser to "/#/test/bgg-autocomplete"
     And we enter the value "There is no game with this title" into the autocomplete component with id "bgg-autocomplete"
     And we click on the "There is no game with this title" option in the autocomplete component with id "bgg-autocomplete"
-    Then the component with id "selected-item-bgg-id" will contain "none"
-    And the component with id "selected-item-primary-name" will contain "There is no game with this title"
-    And the component with id "selected-item-year-published" will contain ""
+    Then the text-field with id "selected-item-bgg-id" will contain "none"
+    And the text-field with id "selected-item-primary-name" will contain "There is no game with this title"
+    And the text-field with id "selected-item-year-published" will contain ""

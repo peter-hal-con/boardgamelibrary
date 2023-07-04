@@ -15,6 +15,11 @@ export default new Router({
             component: Welcome
         },
         {
+            path: '/login',
+            name: 'login',
+            component: () => import('@/views/Login.vue')
+        },
+        {
             path: '/test/bgg-autocomplete',
             name: 'TestBggAutocomplete',
             component: TestBggAutocomplete

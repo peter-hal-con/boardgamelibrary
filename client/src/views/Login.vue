@@ -44,7 +44,7 @@ export default {
         } else {
           console.error(error); // eslint-disable-line no-console
         }
-      });
+      })
     }
   }
 }

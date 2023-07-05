@@ -27,15 +27,12 @@
 <script>
 import {bus} from '@/main'
 
+function auth() {
+  return JSON.parse(localStorage.auth)
+}
+
 export default {
   name: "UserDropdown",
-  data() {
-    return {
-      username: JSON.parse(localStorage.auth).username,
-      is_admin: JSON.parse(localStorage.auth).roles.includes('ROLE_ADMIN'),
-      is_admin_or_committee: JSON.parse(localStorage.auth).roles.includes('ROLE_ADMIN') || JSON.parse(localStorage.auth).roles.includes('ROLE_COMMITTEE')
-    }
-  },
   methods: {
     logout: function () {
       localStorage.removeItem("auth")
@@ -48,6 +45,17 @@ export default {
       }).catch(error => {
         console.error(error); // eslint-disable-line no-console
       });
+    }
+  },
+  computed: {
+    username: function () {
+      return auth().username
+    },
+    is_admin: function () {
+      return auth().roles.includes('ROLE_ADMIN')
+    },
+    is_admin_or_committee: function () {
+      return auth().roles.includes('ROLE_ADMIN') || auth().roles.includes('ROLE_COMMITTEE')
     }
   }
 }

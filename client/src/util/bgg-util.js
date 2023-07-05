@@ -30,13 +30,15 @@ export function createItemWithPrimaryName(primaryName) {
 }
 
 async function bggBaseUrl() {
-    if (process.env.BGG_BASE_URL) {
-        return process.env.BGG_BASE_URL
+    if (sessionStorage.bggBaseUrl) {
+        return sessionStorage.bggBaseUrl
+    } else if (process.env.BGG_BASE_URL) {
+        sessionStorage.bggBaseUrl = process.env.BGG_BASE_URL
+        return sessionStorage.bggBaseUrl
     } else {
-        const origin = window.location.origin === "http://localhost:3000" ? "http://localhost:8080" : window.location.origin
-        return fetch(origin + '/clientConfiguration')
+        return fetch(`${process.env.VUE_APP_SERVER_URL}/clientConfiguration`)
             .then(response => response.json())
-            .then(json => json.BGG_BASE_URL)
+            .then(json => sessionStorage.bggBaseUrl = json.BGG_BASE_URL)
     }
 }
 

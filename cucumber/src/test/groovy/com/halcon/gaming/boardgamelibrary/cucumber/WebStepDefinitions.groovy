@@ -1,6 +1,6 @@
 package com.halcon.gaming.boardgamelibrary.cucumber
 
-import com.halcon.gaming.boardgamelibrary.cucumber.util.ChromeDriverManager
+
 import com.halcon.gaming.boardgamelibrary.cucumber.util.UserRepository
 import groovy.json.JsonSlurper
 import io.cucumber.java.After
@@ -18,7 +18,6 @@ import org.openqa.selenium.chrome.ChromeOptions
 import org.openqa.selenium.html5.LocalStorage
 import org.openqa.selenium.html5.WebStorage
 
-import java.nio.file.Paths
 import java.util.concurrent.TimeUnit
 
 import static org.awaitility.Awaitility.await
@@ -27,7 +26,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals
 class WebStepDefinitions {
     WebDriver webDriver = null
 
-    private final ChromeDriverManager chromeDriverManager = new ChromeDriverManager(Paths.get("build", "chromedriver"))
     private final UserRepository userRepository
 
     WebStepDefinitions(UserRepository userRepository) {
@@ -36,8 +34,6 @@ class WebStepDefinitions {
 
     @Before
     void startWebDriver() {
-        chromeDriverManager.installChromeDriver()
-
         ChromeOptions options = new ChromeOptions()
         options.addArguments("--headless")
         options.addArguments("--no-sandbox")

@@ -13,8 +13,13 @@ export default new Router({
         },
         {
             path: '/login',
-            name: 'login',
-            component: () => import('@/views/Login.vue')
+            name: 'Login',
+            component: () => import('@/views/Login')
+        },
+        {
+            path: '/change-password',
+            name: 'ChangePassword',
+            component: () => import('@/views/ChangePassword')
         },
         {
             path: '/test/bgg-autocomplete',

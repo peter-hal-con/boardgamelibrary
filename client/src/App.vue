@@ -41,19 +41,42 @@
     <v-main>
       <router-view/>
     </v-main>
+    <v-snackbar
+        id="snackbar"
+        v-model="show_snackbar"
+    >
+      {{ text }}
+      <template v-slot:action="{ attrs }">
+        <v-btn
+            text
+            v-bind="attrs"
+            @click="show_snackbar = false"
+        >
+          Close
+        </v-btn>
+      </template>
+    </v-snackbar>
   </v-app>
 </template>
 
 <script>
 
 import UserDropdownLoginButtonToggle from "@/components/UserDropdownLoginButtonToggle.vue";
+import {bus} from "@/main";
 
 export default {
   name: 'App',
   components: {UserDropdownLoginButtonToggle},
 
   data: () => ({
-    //
+    show_snackbar: false,
+    text: '',
   }),
-};
+  created() {
+    bus.$on('showSnackbar', (text) => {
+      this.show_snackbar = true
+      this.text = text
+    })
+  }
+}
 </script>

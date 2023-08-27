@@ -5,16 +5,16 @@
         <v-btn id="user_dropdown" v-bind="attrs" v-on="on">{{ username }}</v-btn>
       </template>
       <v-list>
-        <v-list-item v-if="is_admin_or_committee" id="create_copy" href="/#/createCopy">
+        <v-list-item v-if="is_admin_or_committee" id="create_copy" href="/#/create-copy">
           <v-list-item-title>Create Library Items</v-list-item-title>
         </v-list-item>
-        <v-list-item v-if="is_admin" id="create_user" href="/#/createUser">
+        <v-list-item v-if="is_admin" id="create_user" href="/#/create-user">
           <v-list-item-title>Create User</v-list-item-title>
         </v-list-item>
-        <v-list-item v-if="is_admin" id="list_users" href="/#/listUsers">
+        <v-list-item v-if="is_admin" id="list_users" href="/#/list-users">
           <v-list-item-title>List Users</v-list-item-title>
         </v-list-item>
-        <v-list-item id="password_change" href="/#/changePassword">
+        <v-list-item id="password_change" href="/#/change-password">
           <v-list-item-title>Change Password</v-list-item-title>
         </v-list-item>
         <v-list-item id="logout" href="#" v-on:click="logout()">

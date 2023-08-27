@@ -13,6 +13,7 @@ import org.openqa.selenium.By
 import org.openqa.selenium.SessionNotCreatedException
 import org.openqa.selenium.StaleElementReferenceException
 import org.openqa.selenium.WebDriver
+import org.openqa.selenium.WebElement
 import org.openqa.selenium.chrome.ChromeDriver
 import org.openqa.selenium.chrome.ChromeOptions
 import org.openqa.selenium.html5.LocalStorage
@@ -22,6 +23,8 @@ import java.util.concurrent.TimeUnit
 
 import static org.awaitility.Awaitility.await
 import static org.junit.jupiter.api.Assertions.assertEquals
+import static org.junit.jupiter.api.Assertions.assertFalse
+import static org.junit.jupiter.api.Assertions.assertTrue
 
 class WebStepDefinitions {
     WebDriver webDriver = null
@@ -193,6 +196,15 @@ class WebStepDefinitions {
         }
     }
 
+    @Then("the component with id {string} will be disabled")
+    void the_component_with_id_will_be_disabled(String id) {
+        assertFalse(webDriver.findElement(By.id(id)).enabled)
+    }
+
+    @Then("the component with id {string} will be enabled")
+    void the_component_with_id_will_be_enabled(String id) {
+        assertTrue(webDriver.findElement(By.id(id)).enabled)
+    }
 
     @Then("we will see {string} in the dropdown list of the autocomplete component with id {string}")
     void we_will_see_in_the_dropdown_list_of_the_autocomplete_component_with_id(String value, String id) {
@@ -216,6 +228,35 @@ class WebStepDefinitions {
     void the_button_with_id_will_be_labelled(String id, String label) {
         await().atMost(5, TimeUnit.SECONDS).until {
             webDriver.findElement(By.xpath("//*[@id=\"${id}\"]/span")).text.equalsIgnoreCase(label)
+        }
+    }
+
+    @Then("the snackbar will show {string}")
+    void the_snackbar_will_show(String text) {
+        await().atMost(5, TimeUnit.SECONDS).until {
+            webDriver.findElement(By.xpath("//*[@id=\"snackbar\"]//div[@class=\"v-snack__content\"]")).text.equalsIgnoreCase(text)
+        }
+    }
+
+    private boolean isInErrorState(WebElement element) {
+        while (element.tagName != 'body') {
+            if (element.getAttribute("class")?.contains('error')) return true
+            element = element.findElement(By.xpath('./..'))
+        }
+        return false
+    }
+
+    @Then("the component with id {string} will be in an error state")
+    void the_component_with_id_will_be_in_an_error_state(String id) {
+        await().atMost(5, TimeUnit.SECONDS).until {
+            isInErrorState(webDriver.findElement(By.id(id)))
+        }
+    }
+
+    @Then("the component with id {string} will not be in an error state")
+    void the_component_with_id_will_not_be_in_an_error_state(String id) {
+        await().atMost(5, TimeUnit.SECONDS).until {
+            !isInErrorState(webDriver.findElement(By.id(id)))
         }
     }
 }

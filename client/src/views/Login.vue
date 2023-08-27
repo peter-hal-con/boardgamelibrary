@@ -34,15 +34,15 @@ export default {
         },
         body: JSON.stringify(this.userDetails)
       }).then(checkResponseStatus).then(response => {
-        localStorage.auth = JSON.stringify(response);
-        bus.$emit('loginStateChange', true);
-        this.$router.push('/');
-        this.$forceUpdate();
+        localStorage.auth = JSON.stringify(response)
+        bus.$emit('loginStateChange', true)
+        this.$router.push('/')
+        this.$forceUpdate()
       }).catch(error => {
         if (error.response.status === 401) {
           this.loginFailed = true
         } else {
-          console.error(error); // eslint-disable-line no-console
+          console.error(error) // eslint-disable-line no-console
         }
       })
     }

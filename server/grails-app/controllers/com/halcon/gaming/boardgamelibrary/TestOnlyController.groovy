@@ -2,6 +2,7 @@ package com.halcon.gaming.boardgamelibrary
 
 import grails.converters.JSON
 import grails.gorm.transactions.Transactional
+import grails.plugin.springsecurity.annotation.Secured
 
 class TestOnlyController {
     static responseFormats = ['json', 'xml']
@@ -34,5 +35,15 @@ class TestOnlyController {
     def reset() {
         UserAuthority.findAll().each { it.delete(flush: true) }
         User.findAll().each { it.delete(flush: true) }
+    }
+
+    @Secured(['ROLE_ADMIN'])
+    def adminOnly() {
+        render text: [] as JSON, contentType: 'application/json'
+    }
+
+    @Secured(['ROLE_COMMITTEE'])
+    def committeeOnly() {
+        render text: [] as JSON, contentType: 'application/json'
     }
 }

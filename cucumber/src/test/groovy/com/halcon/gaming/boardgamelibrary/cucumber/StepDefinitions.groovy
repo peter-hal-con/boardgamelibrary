@@ -32,6 +32,7 @@ class StepDefinitions {
         restClient.GET(path)
     }
 
+    @Given("we have authenticated as {string} with password {string}")
     @When("we authenticate as {string} with password {string}")
     void we_authenticate_as_with_password(String username, String password) {
         restClient.authenticate(username, password)
